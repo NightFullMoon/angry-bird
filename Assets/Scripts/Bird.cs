@@ -11,7 +11,12 @@ public class Bird : MonoBehaviour
     private SpringJoint2D sj2d;
     private void Awake()
     {
+        Debug.Log("bird awake");
         sj2d = GetComponent<SpringJoint2D>();
+        Debug.Log(sj2d == null);
+        sj2d.enabled = false;
+        Debug.Log(sj2d == null);
+
     }
 
     // Use this for initialization
@@ -44,6 +49,7 @@ public class Bird : MonoBehaviour
 
 
     bool isClick = false;
+    bool isReady = false;
 
 
     private void OnMouseDown()
@@ -55,14 +61,32 @@ public class Bird : MonoBehaviour
     {
         isClick = false;
         sj2d.enabled = false;
-    }
 
+        GameManager.Instance.OnBirdSent();
+
+        Invoke("Die",5f);
+
+        //GameManager.Instance.OnCurrentBirdDie();
+    }
 
     public LineRenderer leftLineRenderer;
 
     public LineRenderer rightLineRenderer;
 
     public Transform leftPos;
+
+
+    //将当前的小鸟放置在发射台上
+    public void BeReady(Vector3 position)
+    {
+        transform.position = position;
+
+        Debug.Log(sj2d == null);
+        sj2d.enabled = true;
+        Debug.Log(sj2d == null);
+        isReady = true;
+        //GetComponent<SpringJoint2D>
+    }
 
     //绘制拖拽时候的橡皮筋
     void DrawLine()
@@ -74,5 +98,12 @@ public class Bird : MonoBehaviour
         rightLineRenderer.SetPosition(0, rightPos.position);
         rightLineRenderer.SetPosition(1, transform.position);
 
+    }
+
+
+    void Die()
+    {
+        GameManager.Instance.OnCurrentBirdDie();
+        Destroy(gameObject);
     }
 }
