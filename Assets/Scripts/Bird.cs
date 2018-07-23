@@ -5,14 +5,20 @@ using UnityEngine;
 public class Bird : MonoBehaviour
 {
 
+    public Transform rightPos;
+    public float maxDistance = 1.5f;
+
+    private SpringJoint2D sj2d;
+    private void Awake()
+    {
+        sj2d = GetComponent<SpringJoint2D>();
+    }
+
     // Use this for initialization
     void Start()
     {
 
     }
-
-    public Transform rightPos;
-    public float maxDistance = 1.5f;
 
     // Update is called once per frame
     void Update()
@@ -47,5 +53,6 @@ public class Bird : MonoBehaviour
     private void OnMouseUp()
     {
         isClick = false;
+        sj2d.enabled = false;
     }
 }
