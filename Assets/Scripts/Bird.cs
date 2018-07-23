@@ -38,6 +38,7 @@ public class Bird : MonoBehaviour
 
             transform.position = newPosition;
 
+            DrawLine();
         }
     }
 
@@ -54,5 +55,24 @@ public class Bird : MonoBehaviour
     {
         isClick = false;
         sj2d.enabled = false;
+    }
+
+
+    public LineRenderer leftLineRenderer;
+
+    public LineRenderer rightLineRenderer;
+
+    public Transform leftPos;
+
+    //绘制拖拽时候的橡皮筋
+    void DrawLine()
+    {
+
+        leftLineRenderer.SetPosition(0, leftPos.position);
+        leftLineRenderer.SetPosition(1, transform.position);
+
+        rightLineRenderer.SetPosition(0, rightPos.position);
+        rightLineRenderer.SetPosition(1, transform.position);
+
     }
 }
